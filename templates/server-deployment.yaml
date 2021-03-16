@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "redash.labels" . | nindent 4 }}
     app.kubernetes.io/component: server
+    app: {{ .Release.Name }}
+    component: database
 spec:
   replicas: {{ .Values.server.replicaCount }}
   selector:

@@ -1,14 +1,26 @@
 apiVersion: v1
 data:
   datasources.yaml: |
-    datasources:
-    {{- range .Values.config.datasources }}
-      - name: {{ .name }}
-        host: {{ .host }}
-        user: {{ .user }}
-        pwd: {{ .pwd }}
-    {{- end }}
+  {{- range .Values.config.datasources }}
+    - name: {{ .name }}
+      type: {{ .type }}
+      options:
+        port: {{ .options.port }}
+        host: {{ .options.host }}
+        {{- if eq .type "mysql" }}
+        user: {{ .options.user }}
+        passwd: {{ .options.passwordSecretKey }}
+        db: {{ .options.schema }}
+        {{- else }}{{- if eq .type "Cassandra" }}
+        username: {{ .options.user }}
+        password: {{ .options.passwordSecretKey }}
+        keyspace: {{ .options.schema }}
+        {{- else }}
+        user: {{ .options.user }}
+        dbname: {{ .options.schema }}
+        password: {{ .options.passwordSecretKey }}
+        {{- end }}{{- end }}
+  {{- end }}
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-datasources
-

@@ -1,6 +1,5 @@
 ## Default values for Redash.
 ## This is a YAML-formatted file.
-
 image:
   # image.repository -- Redash image name used for server and worker pods
   repository: redash/redash
@@ -30,14 +29,18 @@ serviceAccount:
 
 config:
   datasources:
-    - name: preprod/dbre/test
-      host: dbre/test
-      user: redash_rd
-      pwd: DBRE_TEST_PWD #name of the pwd variable in secret
+    - name: #prod-1/dbre/mariadb-test
+      type: #mysql  #pg   #Cassandra
+      options:
+        host: #mariadb-test.dbre
+        schema: #mysql
+        port: #3306
+        user: #redash_rd
+        passwordSecretKey: #MARIADB_TEST_DBRE_PWD #name of the pwd variable in secret
   groups:
-    - name: dbre
+    - name: #DBRE
       datasources:
-        - mariadb-test
+        - #prod-1/dbre/mariadb-test
 
 ## Redash application configuration
 redash:
@@ -357,8 +360,8 @@ scheduledWorker:
 ## Configuration for hook-config-job
 hookConfigJob:
   image:
-    repository: eu.gcr.io/bbc-registry/
-    tag: 0.1
+    repository:
+    tag:
     pullPolicy: IfNotPresent
   # hookConfigJob.podAnnotations -- Annotations for scheduled worker pod assignment [ref](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
   podAnnotations: {}
