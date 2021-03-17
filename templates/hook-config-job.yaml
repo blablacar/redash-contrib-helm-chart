@@ -29,6 +29,11 @@ spec:
       - name: {{ include "redash.name" . }}-config
         image: "{{ .Values.hookConfigJob.image.repository }}:{{ .Values.hookConfigJob.image.tag }}"
         imagePullPolicy: {{ .Values.hookConfigJob.image.pullPolicy }}
+        env:
+        - name: APIKEY
+          value: Ddp9N6bVVeUXZNcufmcHuP1Y5sYxzEaKtPIcG3KL
+        - name: MARIADB_TEST_DBRE_PWD
+          value: welcome
         command: ["python3", "redash-config-gitops.py"]
         args:
           - --host=http://{{ .Release.Name }}
