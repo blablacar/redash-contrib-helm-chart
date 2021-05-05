@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0
+- this is a test
+
 ## 0.2.1
 - add integerFormat and floatFormat values to diplay int/float without comma
 
