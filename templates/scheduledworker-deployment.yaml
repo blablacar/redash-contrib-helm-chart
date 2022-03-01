@@ -6,19 +6,19 @@ metadata:
     {{- include "redash.labels" . | nindent 4 }}
     app.kubernetes.io/component: scheduledworker
 spec:
-  replicas: {{ .Values.scheduledWorker.replicaCount }}
+  # Must stay at 1, if several scheduler are spawn there will be a conflict with an already active rqscheduler found with the same key in redis
+  replicas: 1
   selector:
     matchLabels:
       {{- include "redash.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: scheduledworker
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
         {{- include "redash.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: scheduledworker
-        {{- if .Values.scheduledWorker.podLabels }}
-        {{- tpl (toYaml .Values.scheduledWorker.podLabels) $ | nindent 8 }}
-        {{- end }}
+        app: {{ .Release.Name }}
       {{- if .Values.scheduledWorker.podAnnotations }}
       annotations:
       {{ toYaml .Values.scheduledWorker.podAnnotations | nindent 8 }}
@@ -29,12 +29,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       serviceAccountName: {{ include "redash.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.scheduledWorker.podSecurityContext | nindent 8 }}
+      securityContext: {{ toYaml .Values.redash.securityContext | nindent 8 }}
       containers:
         - name: {{ include "redash.name" . }}-scheduledworker
-          securityContext:
-            {{- toYaml .Values.scheduledWorker.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]

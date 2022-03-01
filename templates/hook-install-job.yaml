@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "redash.labels" . | nindent 4 }}
     app.kubernetes.io/component: install
+    app: {{ .Release.Name }}
   annotations:
     # This is what defines this resource as a hook.
     "helm.sh/hook": post-install
@@ -29,7 +30,7 @@ spec:
       serviceAccountName: {{ include "redash.serviceAccountName" . }}
       restartPolicy: Never
       securityContext:
-        {{- toYaml .Values.hookInstallJob.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.redash.securityContext | nindent 8 }}
       containers:
       - name: {{ include "redash.name" . }}-server
         securityContext:

@@ -11,14 +11,13 @@ spec:
     matchLabels:
       {{- include "redash.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: adhocworker
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
         {{- include "redash.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: adhocworker
-        {{- if .Values.adhocWorker.podLabels }}
-        {{- tpl (toYaml .Values.adhocWorker.podLabels) $ | nindent 8 }}
-        {{- end }}
+        app: {{ .Release.Name }}
       {{- if .Values.adhocWorker.podAnnotations }}
       annotations:
       {{ toYaml .Values.adhocWorker.podAnnotations | nindent 8 }}
@@ -29,12 +28,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       serviceAccountName: {{ include "redash.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.adhocWorker.podSecurityContext | nindent 8 }}
+      securityContext: {{ toYaml .Values.redash.securityContext | nindent 8 }}
       containers:
         - name: {{ include "redash.name" . }}-adhocworker
-          securityContext:
-            {{- toYaml .Values.adhocWorker.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]
