@@ -544,7 +544,22 @@ ad.datadoghq.com/redash-server.init_configs: '[{}]'
 {{- end }}
 
 {{- define "datadog.annotations.adhocworker" }}
-ad.datadoghq.com/redash-adhocworker.logs: '[{"source": "redash", "service": "{{ $.Release.Name }}"}]'
+ad.datadoghq.com/redash-adhocworker.logs: >-
+  [{
+
+    "source": "redash",
+    "service": "{{ $.Release.Name }}",
+    "log_processing_rules": [{
+      "type": "exclude_at_match",
+      "name": "exclude_healthcheck",
+      "pattern" : "worker_healthcheck"
+    },
+    {
+      "type": "exclude_at_match",
+      "name": "exclude_info",
+      "pattern" : "info"
+    }]
+  }]
 ad.datadoghq.com/redash-adhocworker.init_configs: '[{}]'
 {{- end }}
 
