@@ -546,7 +546,6 @@ ad.datadoghq.com/redash-server.init_configs: '[{}]'
 {{- define "datadog.annotations.adhocworker" }}
 ad.datadoghq.com/redash-adhocworker.logs: >-
   [{
-
     "source": "redash",
     "service": "{{ $.Release.Name }}",
     "log_processing_rules": [{
