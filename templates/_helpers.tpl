@@ -532,6 +532,27 @@ app: {{ .Release.Name }}
 component: database
 {{- end -}}
 
+{{- define "datadog.labels" }}
+tags.datadoghq.com/service: {{ .Release.Name | lower | quote }}
+tags.datadoghq.com/version: {{ .Values.image.tag | quote }}
+team: team_dbre
+{{- end }}
+
+{{- define "datadog.annotations.server" }}
+ad.datadoghq.com/redash-server.logs: '[{"source": "redash", "service": "{{ $.Release.Name }}"}]'
+ad.datadoghq.com/redash-server.init_configs: '[{}]'
+{{- end }}
+
+{{- define "datadog.annotations.adhocworker" }}
+ad.datadoghq.com/redash-adhocworker.logs: '[{"source": "redash", "service": "{{ $.Release.Name }}"}]'
+ad.datadoghq.com/redash-adhocworker.init_configs: '[{}]'
+{{- end }}
+
+{{- define "datadog.annotations.scheduledworker" }}
+ad.datadoghq.com/redash-scheduledworker.logs: '[{"source": "redash", "service": "{{ $.Release.Name }}"}]'
+ad.datadoghq.com/redash-scheduledworker.init_configs: '[{}]'
+{{- end }}
+
 {{/*
 Create the name of the service account to use
 */}}
