@@ -83,9 +83,10 @@ data:
     else
       echo "Using external postgresql database"
     fi
-    if [ -z "$REDASH_REDIS_URL" ]; then
-      export REDASH_REDIS_URL=redis://:${REDASH_REDIS_PASSWORD}@${REDASH_REDIS_HOSTNAME}:${REDASH_REDIS_PORT}/${REDASH_REDIS_DB}
-      echo "Using Redis: redis://:******@${REDASH_REDIS_HOSTNAME}:${REDASH_REDIS_PORT}/${REDASH_REDIS_DB}"
+    if [ -z "$REDASH_REDIS_PASSWORD" ]; then
+      echo "Using authentication to Redis"
     else
-      echo "Using external redis database"
+      echo "Not using authentication to Redis"
     fi
+    export REDASH_REDIS_URL=redis://:${REDASH_REDIS_PASSWORD:-}@${REDASH_REDIS_HOSTNAME}:${REDASH_REDIS_PORT}/${REDASH_REDIS_DB}
+    echo "Using Redis: redis://:******@${REDASH_REDIS_HOSTNAME}:${REDASH_REDIS_PORT}/${REDASH_REDIS_DB}"

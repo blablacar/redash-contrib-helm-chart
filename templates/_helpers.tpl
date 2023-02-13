@@ -100,14 +100,21 @@ Shared environment block used across each component.
   value: "{{ .Values.postgresql.postgresqlDatabase }}"
 {{- end }}
 {{- if not .Values.redis.enabled }}
-- name: REDASH_REDIS_URL
-  {{- if .Values.externalRedisSecret }}
+- name: REDASH_REDIS_PASSWORD
+  {{- if .Values.externalRedis.auth.enabled }}
   valueFrom:
     secretKeyRef:
-      {{- .Values.externalRedisSecret | toYaml | nindent 6 }}
+      name: {{ .Values.externalRedis.auth.secretName | quote }}
+      key: {{ .Values.externalRedis.auth.secretKey }}
   {{- else }}
-  value: {{ default "" .Values.externalRedis | quote }}
+  value: ""
   {{- end }}
+- name: REDASH_REDIS_HOSTNAME
+  value: {{ .Values.externalRedis.host }}
+- name: REDASH_REDIS_PORT
+  value: "{{ .Values.externalRedis.port }}"
+- name: REDASH_REDIS_DB
+  value: {{ .Values.externalRedis.database }}
 {{- else }}
 - name: REDASH_REDIS_PASSWORD
   valueFrom:

@@ -510,7 +510,7 @@ externalPostgreSQLSecret:
   # name: redash-postgres
   # key: connectionString
 
-# envSecretName -- DEPRECIATED, use externalPostgreSQLSecret/externalRedisSecret instead. Contents of this secret will be loaded as environment variables into the container. Useful e.g. to set to set PostgreSQL password in externalPostgreSQL parameter: postgresql://user:$(POSTGRESQL_PASSWORD)@host:5432/database [ref](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config)
+# envSecretName -- DEPRECIATED, use externalPostgreSQLSecret/externalRedis.auth.secretName instead. Contents of this secret will be loaded as environment variables into the container. Useful e.g. to set to set PostgreSQL password in externalPostgreSQL parameter: postgresql://user:$(POSTGRESQL_PASSWORD)@host:5432/database [ref](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config)
 # envSecretName:
 
 ## Configuration values for the postgresql dependency. This PostgreSQL instance is used by default for all Redash state storage [ref](https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md)
@@ -543,11 +543,13 @@ postgresql:
 
 # externalRedis -- External Redis configuration. To use an external Redis instead of the automatically deployed redis chart: set redis.enabled to false then uncomment and configure the externalRedis connection URL (e.g. redis://user:pass@host:6379/database).
 externalRedis:
-# externalRedisSecret -- Read external Redis configuration from a secret. This should point at a secret file with a single key which specifyies the connection string.
-externalRedisSecret:
-  {}
-  # name: redash-redis
-  # key: connectionString
+  host: ""      # The name of the Kube service you created elsewhere, pointing to your Redis master.
+  database: ""  # Stays empty in the case of MemoryStore
+  port: 6379
+  auth:
+    enabled: false  # Whether or not to use authentication
+    secretName: ""  # Name of the secret where the external Redis's auth string is to be found
+    secretKey: "redisAuthString"
 
 ## Configuration values for the redis dependency. This Redis instance is used by default for caching and temporary storage [ref](https://github.com/kubernetes/charts/blob/master/stable/redis/README.md)
 redis:
