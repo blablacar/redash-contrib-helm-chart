@@ -2,6 +2,8 @@
 
 Redash is an open source tool built for teams to query, visualize and collaborate.
 
+coucou test
+
 ## Introduction
 
 This chart bootstraps a [Redash](https://github.com/getredash/redash) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
