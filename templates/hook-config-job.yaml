@@ -27,6 +27,7 @@ spec:
         - configMap:
             name: {{ .Release.Name }}-groups
           name: {{ .Release.Name }}-groups
+      serviceAccountName: {{ include "redash.serviceAccountName" . }}
       restartPolicy: Never
       containers:
       - name: {{ include "redash.name" . }}-config
