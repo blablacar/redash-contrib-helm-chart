@@ -3,6 +3,8 @@ kind: Job
 metadata:
   name: "{{ .Release.Name }}-upgrade"
   labels:
+    # Disable Istio side-car preventing job to finish properly
+    sidecar.istio.io/inject: "false"
     {{- include "redash.labels" . | nindent 4 }}
     {{- include "datadog.labels" . | indent 4 }}
     app.kubernetes.io/component: upgrade
