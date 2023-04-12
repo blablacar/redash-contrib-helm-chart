@@ -3,8 +3,6 @@ kind: Job
 metadata:
   name: "{{ .Release.Name }}-install"
   labels:
-    # Disable Istio side-car preventing job to finish properly
-    sidecar.istio.io/inject: "false"
     {{- include "redash.labels" . | nindent 4 }}
     {{- include "datadog.labels" . | indent 4 }}
     app.kubernetes.io/component: install
@@ -19,6 +17,8 @@ spec:
     metadata:
       name: "{{ .Release.Name }}"
       labels:
+        # Disable Istio side-car preventing job to finish properly
+        sidecar.istio.io/inject: "false"
         {{- include "redash.selectorLabels" . | nindent 8 }}
         {{- include "datadog.labels" . | indent 8 }}
       {{- if .Values.hookInstallJob.podAnnotations }}
