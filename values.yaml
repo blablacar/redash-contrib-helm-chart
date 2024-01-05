@@ -79,8 +79,6 @@ redash:
   # redash.statsdUseTags -- `REDASH_STATSD_USE_TAGS` value. Defaults to `false`. Whether to use tags in statsd metrics (influxdb’s format).
   statsdUseTags:
   # redash.queryResultsCleanupEnabled -- `REDASH_QUERY_RESULTS_CLEANUP_ENABLED` value. Defaults to `true`.
-  scheduledQueryTimeLimit: 4
-  adhocQueryTimeLimit : 4
   queryResultsCleanupEnabled:
   # redash.queryResultsCleanupCount -- `REDASH_QUERY_RESULTS_CLEANUP_COUNT` value. Defaults to `100`.
   queryResultsCleanupCount:
@@ -177,7 +175,7 @@ redash:
   # redash.disabledQueryRunners -- `REDASH_DISABLED_QUERY_RUNNERS` value. Defaults to ``.
   disabledQueryRunners:
   # redash.adhocQueryTimeLimit -- `REDASH_ADHOC_QUERY_TIME_LIMIT` value. Defaults to `None`.
-  adhocQueryTimeLimit:
+  adhocQueryTimeLimit: 4
   # redash.enabledDestinations -- `REDASH_ENABLED_DESTINATIONS` value. Defaults to `”,”.join(default_destinations)`.
   enabledDestinations:
   # redash.additionalDestinations -- `REDASH_ADDITIONAL_DESTINATIONS` value. Defaults to ``.
