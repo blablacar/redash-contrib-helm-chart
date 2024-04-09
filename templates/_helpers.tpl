@@ -61,6 +61,22 @@ Create a default fully qualified redis name.
 {{- end -}}
 
 {{/*
+Get the hostname from the postgresql connection string
+Example: the input should be similar to:
+    postgresql://redash:$(POSTGRESQL_PASSWORD)@my-pg-host-for-redash/redash
+And the output will be:
+    my-pg-host-for-redash
+*/}}
+{{- define "redash.externalPostgresql.hostname" -}}
+{{ mustRegexReplaceAll ".*@([^/:]+)[/:].*" .Values.externalPostgreSQL "${1}" }}
+{{- end -}}
+
+{{/* same than Postgres above */}}
+{{- define "redash.externalRedis.hostname" -}}
+{{ mustRegexReplaceAll ".*@([^/:]+)[/:].*" .Values.externalRedis "${1}" }}
+{{- end -}}
+
+{{/*
 Get the secret name.
 */}}
 {{- define "redash.secretName" -}}
