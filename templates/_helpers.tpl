@@ -551,7 +551,7 @@ component: database
 {{- define "datadog.labels" }}
 tags.datadoghq.com/service: {{ .Release.Name | lower | quote }}
 tags.datadoghq.com/version: {{ .Values.image.tag | quote }}
-team: team_dbre
+team: dbre
 {{- end }}
 
 {{- define "datadog.annotations.server" }}
