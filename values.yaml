@@ -383,17 +383,17 @@ adhocWorker:
 ## Configuration for hook-config-job
 hookConfigJob:
   image:
-    repository:
-    tag:
+    repository: eu.gcr.io/bbc-registry/redash-config
+    tag: 1.20240416100708.0-shaf2292497
     pullPolicy: IfNotPresent
   # hookConfigJob.podAnnotations -- Annotations for scheduled worker pod assignment [ref](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
   podAnnotations: {}
   resources:
-  # limits:
-  #   memory: 300Mi
-  # requests:
-  #   cpu: 100m
-  #  memory: 100Mi
+    limits:
+      memory: 300Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
 
 ## Configuration for hook-install-job
 hookInstallJob:
