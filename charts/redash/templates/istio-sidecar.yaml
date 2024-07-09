@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: {{ .Release.Name }}
-  {{- if .Values.resourceValidation.enabled }}
+  {{- if .Values.istio.resourceValidation.enabled }}
   labels:
     istio.io/tag: {{ default "stable" .Values.resourceValidation.istioRevisionTag }}
   {{- end }}
