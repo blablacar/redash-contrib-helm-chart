@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}
   {{- if .Values.istio.resourceValidation.enabled }}
   labels:
-    istio.io/tag: {{ default "stable" .Values.resourceValidation.istioRevisionTag }}
+    istio.io/tag: {{ default "stable" .Values.istio.resourceValidation.istioRevisionTag }}
   {{- end }}
 spec:
   workloadSelector:
