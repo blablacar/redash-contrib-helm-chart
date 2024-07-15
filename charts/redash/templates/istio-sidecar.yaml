@@ -1,7 +1,12 @@
+---
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: {{ .Release.Name }}
+  {{- if .Values.istio.resourceValidation.enabled }}
+  labels:
+    istio.io/tag: {{ default "stable" .Values.istio.resourceValidation.istioRevisionTag }}
+  {{- end }}
 spec:
   workloadSelector:
     labels: {{ include "redash.selectorLabels" . | nindent 6 }}
