@@ -683,7 +683,7 @@ extraObjects: []
 hookConfigJob:
   image:
     repository: eu.gcr.io/bbc-registry/redash-config
-    tag: 1.20240416100708.0-shaf2292497
+    tag: 1.20240801151712.0-sha7343836a
     pullPolicy: IfNotPresent
   # hookConfigJob.podAnnotations -- Annotations for scheduled worker pod assignment [ref](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
   podAnnotations: {}
